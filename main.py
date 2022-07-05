@@ -9,15 +9,25 @@ headers = {
 
 
 def get_data_file(headers):
-	url = "https://landingfolio.com/"
+	# url = "https://landingfolio.com/"
 
-	r = requests.get(url=url, headers=headers)
+	# r = requests.get(url=url, headers=headers)
 
-	with open('index.html', 'w') as file:
-		file.write(r.text)
+	# with open('index.html', 'w') as file:
+	# 	file.write(r.text)
+
+	pages = 0
+
+	while True:
+		url = f'https://landingfolio.com/api/inspiration?page={pages}'
+
+		print(url)
+		pages += 1
+
 
 def download_imgs(file_path):
 	pass
+
 
 def main():
 	get_data_file(headers=headers)
