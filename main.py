@@ -21,7 +21,10 @@ def get_data_file(headers):
 	while True:
 		url = f'https://landingfolio.com/api/inspiration?page={pages}'
 
-		print(url)
+		# print(url)
+		response = requests.get(url=url, headers=headers)
+		data = response.json()
+		print(data[0]["title"])
 		pages += 1
 
 
