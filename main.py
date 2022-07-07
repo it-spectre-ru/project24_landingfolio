@@ -1,3 +1,4 @@
+import json
 import requests
 
 
@@ -17,15 +18,31 @@ def get_data_file(headers):
 	# 	file.write(r.text)
 
 	pages = 0
+	result_list = []
 
-	while True:
-		url = f'https://landingfolio.com/api/inspiration?page={pages}'
+	for i in range(1, 5):
+		url = f'https://landingfolio.com/api/inspiration?page={i}'
 
-		# print(url)
 		response = requests.get(url=url, headers=headers)
 		data = response.json()
-		print(data[0]["title"])
+
+		for item in data:
+				result_list.append(
+					{
+						"title": item.get("title"),
+						"slug": item.get("slug"),
+						"url": item.get("url")
+					}
+				)
+				print(item['title'])
+				with open("result_list.json", "a") as file:
+					json.dump(result_list, file, indent=4, ensure_ascii=True)
+
+				return f"[INFO] Finish"
+				
+		print(f"[+] Processed {i}")
 		pages += 1
+
 
 
 def download_imgs(file_path):
@@ -33,7 +50,7 @@ def download_imgs(file_path):
 
 
 def main():
-	get_data_file(headers=headers)
+	print(get_data_file(headers=headers))
 
 if __name__ == '__main__':
 	main()
